@@ -1,0 +1,31 @@
+<div class="batch-card-wrapper">
+    <div class="row">
+        <div class="col">
+            <h6 class="text-primary">
+                {{batchData.batchName}}
+            </h6>            
+        </div>
+    </div>
+    <div class="card mt-1">
+        <div class="card-body">
+            <table class="table table-borderless">
+                <thead class="border-bottom border-bottom-2">
+                    <tr>
+                        <th scope="col">Part name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of batchData.items; track item.partName) {
+                    <tr>
+                        <th>{{item.partName}}</th>
+                        <td>{{item.price}}</td>
+                        <td>{{item.time | date:'medium'}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
