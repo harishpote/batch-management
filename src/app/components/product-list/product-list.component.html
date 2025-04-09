@@ -1,39 +1,10 @@
-<div class="product-list-wrapper">
+<div class="product-wrapper">
     <div class="row">
         <div class="col">
-            <input class="form-control rounded-0" type="text" placeholder="Search part here" [(ngModel)]="searchTerm"
-                aria-label="default input">
+            <app-data-table [dataSource]="partList"
+            [columns]="columns" [filter]="true" [style]="'border'"
+            (handleAction)="handleAction($event)"
+            (handleInputChange)="handleInputChange($event)"></app-data-table>
         </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Part Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (item of filteredRecords; track item.partName) {
-                    <tr>
-                        <th>{{item.partName}}</th>
-                        <td><input class="form-control" [value]="item.price" type="number" aria-label="default input" (change)="doChange($event, item)"></td>
-                        <td>
-                            @if(item.status == PART_STATUS.UNPROCESSED){
-                            <button type="button" class="btn bg-success-subtle text-success btn-sm w-100" (click)="doAction(item)">Add</button>
-                            }
-                            @else {
-                            <button type="button" class="btn bg-danger-subtle text-danger btn-sm w-100" (click)="doAction(item)">Remove</button>
-                            }
-                        </td>
-                    </tr>
-                    } @empty {
-                    <p>There are no items</p>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+    </div>   
 </div>

@@ -1,0 +1,62 @@
+<div class="data-table-wrapper">
+    @if(filter){
+    <div class="row">
+        <div class="col">
+            <input class="form-control rounded-0" type="text" placeholder="Search part here" [(ngModel)]="searchTerm"
+                aria-label="default input">
+        </div>
+    </div>
+    }
+    <div class="row mt-2">
+        <div class="col">
+            <table class="table" [ngClass]="style == 'border' ? 'table-bordered' : 'table-borderless'">
+                <thead [ngClass]="style !== 'border'? 'border-bottom border-bottom-2':''">
+                    <tr>
+                        @for (item of columns; track item.name) {
+                        <th scope="col">{{item.displayName}}</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of filteredRecords; track item.id) {
+                    <tr>
+                        @for (column of columns; track column.name) {
+                        @switch (column.type) {
+                        @case ('input') {
+                        <td><input class="form-control" [value]="item.price" type="number" aria-label="default input"
+                            (change)="onInputChange(column.name, item, $event)">
+                        </td>
+                        }
+                        @case ('action') {
+                        <td>
+                            <button type="button" class="btn btn-sm w-100"
+                                [ngClass]="item.status === PART_STATUS.UNPROCESSED ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'"
+                                (click)="onActionClick(item.status === PART_STATUS.UNPROCESSED ? 'add': 'remove', item)">
+                                {{item.status === PART_STATUS.UNPROCESSED ? 'Add': 'Remove'}}
+                            </button>
+                        </td>
+                        }
+                        @case ('date') {
+                            <td [ngClass]="item.status === PART_STATUS.REMOVED ? 'text-danger':''">
+                                {{item[column.name]  | date:'medium'}}
+                            </td>
+                        }
+                        @default {
+                            @if(item.remark?.length) {
+                                <td>{{item.remark}}</td>
+                            }@else {
+                                <td [ngClass]="item.status === PART_STATUS.REMOVED ? 'text-danger':''">{{item[column.name]}}</td>
+                            }
+                        
+                        }
+                        }
+                        }
+                    </tr>
+                    } @empty {
+                    <p>There are no items</p>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
