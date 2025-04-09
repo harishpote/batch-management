@@ -1,18 +1,16 @@
-export interface Batch {
-  batchName: string,
-  items: BatchItem[]  
-}
+import { PART_STATUS } from "../constants/data.constant";
 
-export interface BatchItem {
-  partName: string;
-  price: number;
-  time: string;
-  status: string
+export interface Batch {
+  id: number;
+  batchName: string;
+  items: Part[];
 }
 
 export interface Part {
+  id: number;
   partName: string;
   price: number;
-  status: string;
+  status: PART_STATUS;
   time?: string;
+  remark?: string;
 }

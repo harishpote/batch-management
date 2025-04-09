@@ -1,0 +1,7 @@
+<div class="batch-list-wrapper">
+    @for (item of dataService.$BatchList | async; track item.id) {
+        <app-batch-card [batchData]="item"></app-batch-card>
+        } @empty {
+        <p> There are no items, Create new Batch</p>
+        }
+</div>
